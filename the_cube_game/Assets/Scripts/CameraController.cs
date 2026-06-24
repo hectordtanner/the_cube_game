@@ -13,8 +13,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float _cameraDistance = 5;
 
+    [SerializeField]
+    private float _smoothTime = 0.1f;
+
     private float _rotationX;
     private float _rotationY;
+
+    private Vector3 _localEulerAngles = new Vector3(0, 0, 0);
+    private Vector3 _velocity = Vector3.zero;
 
     void Update()
     {
@@ -27,7 +33,9 @@ public class CameraController : MonoBehaviour
         }
         _rotationX = Mathf.Clamp(_rotationX, -90, 90);
 
-        transform.localEulerAngles = new Vector3(_rotationX, _rotationY, 0);
+        _localEulerAngles = Vector3.SmoothDamp(_localEulerAngles, new Vector3(_rotationX, _rotationY, 0), ref _velocity, _smoothTime);
+
+        transform.localEulerAngles = _localEulerAngles; 
         transform.position = _target.transform.position - transform.forward * _cameraDistance;
     }
 }
