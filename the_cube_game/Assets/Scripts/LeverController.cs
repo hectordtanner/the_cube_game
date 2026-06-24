@@ -1,31 +1,19 @@
-
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-public class LeverOneController : MonoBehaviour
+public class CheckController : MonoBehaviour
 {
     [SerializeField]
     private float _mouseSensitivity = 5;
 
+    [SerializeField]
+    private float _positionZ;
+
     private float _positionY = 1;
     private bool _leverHeld = false;
 
-    [SerializeField]
-    private Material _material;
-
-    [SerializeField]
-    private MeshRenderer _button;
-
-    public float redColorValue;
-
-    [SerializeField]
-    private ButtonController _buttonData;
-
-    void Start()
-    {
-        _material = _button.material;
-    }
+    public float _checkValue;
 
     void Update()
     {
@@ -54,14 +42,9 @@ public class LeverOneController : MonoBehaviour
                 _positionY += mouseDelta.y;
                 _positionY = Mathf.Clamp(_positionY, -1, 1);
 
-                transform.position = new Vector3(2, _positionY, 0);
+                transform.position = new Vector3(2, _positionY, _positionZ);
         }
 
-        redColorValue = (transform.position.y / 2) + 0.5f;
-
-        if (!_buttonData._overrideColor)
-        {
-            _material.SetColor("_BaseColor", new Color(redColorValue, 1.0f, 1.0f, 1.0f));
-        }
+        _checkValue = (transform.position.y + 1) / 2;
     }
 }
