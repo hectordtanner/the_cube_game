@@ -5,37 +5,37 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {   
     [SerializeField]
-    private float _mouseSensitivity = 1.0f;
+    private float mouseSensitivity = 1.0f;
 
     [SerializeField]
-    private Transform _target;
+    private Transform target;
 
     [SerializeField]
-    private float _cameraDistance = 5;
+    private float cameraDistance = 5;
 
     [SerializeField]
-    private float _smoothTime = 0.1f;
+    private float smoothTime = 0.1f;
 
-    private float _rotationX;
-    private float _rotationY;
+    private float rotationX;
+    private float rotationY;
 
-    private Vector3 _localEulerAngles = new Vector3(0, 0, 0);
-    private Vector3 _velocity = Vector3.zero;
+    private Vector3 localEulerAngles = new Vector3(0, 0, 0);
+    private Vector3 velocity = Vector3.zero;
 
     void Update()
     {
         if (Mouse.current.rightButton.isPressed)
         {
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * _mouseSensitivity;
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity;
             
-            _rotationY += mouseDelta.x;
-            _rotationX += -1 * mouseDelta.y;
+            rotationY += mouseDelta.x;
+            rotationX += -1 * mouseDelta.y;
         }
-        _rotationX = Mathf.Clamp(_rotationX, -90, 90);
+        rotationX = Mathf.Clamp(rotationX, -90, 90);
 
-        _localEulerAngles = Vector3.SmoothDamp(_localEulerAngles, new Vector3(_rotationX, _rotationY, 0), ref _velocity, _smoothTime);
+        localEulerAngles = Vector3.SmoothDamp(localEulerAngles, new Vector3(rotationX, rotationY, 0), ref velocity, smoothTime);
 
-        transform.localEulerAngles = _localEulerAngles; 
-        transform.position = _target.transform.position - transform.forward * _cameraDistance;
+        transform.localEulerAngles = localEulerAngles; 
+        transform.position = target.transform.position - transform.forward * cameraDistance;
     }
 }

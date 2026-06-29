@@ -119,6 +119,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &211165918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211165919}
+  - component: {fileID: 211165921}
+  - component: {fileID: 211165920}
+  m_Layer: 5
+  m_Name: TutorialImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &211165919
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211165918}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1428074333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -100, y: -100}
+  m_SizeDelta: {x: 30, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &211165920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211165918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9ce9128412a121843a8341fe59fb7291, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &211165921
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211165918}
+  m_CullTransparentMesh: 1
 --- !u!1 &239665416
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,9 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773d3bbd2346de140a544c2222397843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeverController
-  _mouseSensitivity: 0.008
-  _positionZ: -1
-  _checkValue: 0
+  mouseSensitivity: 5
+  positionZ: 0
+  checkValue: 0
 --- !u!1 &259849290
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,8 +388,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -614,10 +689,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a082927be789b438767df6ef2955be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _mouseSensitivity: 0.3
-  _target: {fileID: 1009965836}
-  _cameraDistance: 5
-  _smoothTime: 0.2
+  mouseSensitivity: 0.5
+  target: {fileID: 1009965836}
+  cameraDistance: 5
+  smoothTime: 0.1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,8 +886,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1130,6 +1205,7 @@ GameObject:
   - component: {fileID: 1428074332}
   - component: {fileID: 1428074331}
   - component: {fileID: 1428074330}
+  - component: {fileID: 1428074334}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1216,6 +1292,7 @@ RectTransform:
   - {fileID: 259849291}
   - {fileID: 763543429}
   - {fileID: 755006868}
+  - {fileID: 211165919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1223,6 +1300,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1428074334
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428074329}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1609737368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,9 +1354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773d3bbd2346de140a544c2222397843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RedLeverController
-  _mouseSensitivity: 0.008
-  _positionZ: 1
-  _checkValue: 0
+  mouseSensitivity: 5
+  positionZ: 0
+  checkValue: 0
 --- !u!65 &1609737370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1492,10 +1591,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a082927be789b438767df6ef2955be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  _mouseSensitivity: 0.3
-  _target: {fileID: 1009965836}
-  _cameraDistance: 5
-  _smoothTime: 0.2
+  mouseSensitivity: 0.5
+  target: {fileID: 1009965836}
+  cameraDistance: 5
+  smoothTime: 0.1
 --- !u!1 &1933956310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,14 +1723,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   score: 0
-  _lenience: 0.1
+  lenience: 0.1
   goalDisplay: {fileID: 763543430}
-  _redLever: {fileID: 2007764498}
-  _blueLever: {fileID: 239665421}
-  _greenLever: {fileID: 1609737369}
-  _fadeSpeed: 0.02
-  _newColorDifference: 0.2
-  _scoreText: {fileID: 755006870}
+  redLever: {fileID: 2007764498}
+  blueLever: {fileID: 239665421}
+  greenLever: {fileID: 1609737369}
+  fadeSpeed: 0.1
+  newGoalDifference: 0.1
+  scoreText: {fileID: 755006870}
 --- !u!1 &2007764493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,9 +1856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773d3bbd2346de140a544c2222397843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RedLeverController
-  _mouseSensitivity: 0.008
-  _positionZ: 0
-  _checkValue: 0
+  mouseSensitivity: 5
+  positionZ: 0
+  checkValue: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

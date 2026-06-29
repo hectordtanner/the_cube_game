@@ -5,55 +5,55 @@ using System.Collections.Generic;
 
 public class ButtonController : MonoBehaviour
 {
-    private Material _material;
+    private Material material;
 
-    private bool _overrideColor = false;
-    private float _colorFade = 0.0f;
-    private Color _targetColor = Color.white;
-    private Color _buttonColor = Color.white;
+    private bool overrideColor = false;
+    private float colorFade = 0.0f;
+    private Color targetColor = Color.white;
+    private Color buttonColor = Color.white;
 
-    private List<float> _goals = new List<float>();
-    private List<CheckController> _checks = new List<CheckController>();
+    private List<float> goals = new List<float>();
+    private List<CheckController> checks = new List<CheckController>();
 
     public int score = 0;
 
     [SerializeField]
-    private float _lenience = 0.1f;
+    private float lenience = 0.1f;
 
     [SerializeField]
     private Image goalDisplay;
 
     [SerializeField]
-    private CheckController _redLever;
+    private CheckController redLever;
 
     [SerializeField]
-    private CheckController _blueLever;
+    private CheckController blueLever;
 
     [SerializeField]
-    private CheckController _greenLever;
+    private CheckController greenLever;
 
     [SerializeField]
-    private float _fadeSpeed = 0.1f;
+    private float fadeSpeed = 0.1f;
 
     [SerializeField]
-    private float _newGoalDifference = 0.1f;
+    private float newGoalDifference = 0.1f;
 
     [SerializeField]
-    private TextMeshProUGUI _scoreText;
+    private TextMeshProUGUI scoreText;
 
     void Start()
     {
-        _material = GetComponent<MeshRenderer>().material;
+        material = GetComponent<MeshRenderer>().material;
 
-        _goals.Add(Random.Range(0.0f, 1.0f));
-        _goals.Add(Random.Range(0.0f, 1.0f));
-        _goals.Add(Random.Range(0.0f, 1.0f));
+        goals.Add(Random.Range(0.0f, 1.0f));
+        goals.Add(Random.Range(0.0f, 1.0f));
+        goals.Add(Random.Range(0.0f, 1.0f));
         
-        goalDisplay.color = new Color(_goals[0], _goals[1], _goals[2], 1.0f);
+        goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
 
-        _checks.Add(_redLever);
-        _checks.Add(_greenLever);
-        _checks.Add(_blueLever);
+        checks.Add(redLever);
+        checks.Add(greenLever);
+        checks.Add(blueLever);
     }
 
     void OnMouseDown()
@@ -61,59 +61,59 @@ public class ButtonController : MonoBehaviour
         if (FullCheck())
         {
             score += 1;
-            _scoreText.text = "Score: " + score;
+            scoreText.text = "Score: " + score;
             
-            for (int i = 0; i < _goals.Count; i++)
+            for (int i = 0; i < goals.Count; i++)
             {
-                if (Random.value < _goals[i])
+                if (Random.value < goals[i])
                 {
-                    _goals[i] = Random.Range(0.0f, _goals[i] - _newGoalDifference);
+                    goals[i] = Random.Range(0.0f, goals[i] - newGoalDifference);
                 }
                 else
                 {
-                    _goals[i] = Random.Range(_goals[i] + _newGoalDifference, 1.0f);
+                    goals[i] = Random.Range(goals[i] + newGoalDifference, 1.0f);
                 }
-                _goals[i] = Mathf.Clamp(_goals[i], 0.0f, 1.0f);
+                goals[i] = Mathf.Clamp(goals[i], 0.0f, 1.0f);
             }
 
-            goalDisplay.color = new Color(_goals[0], _goals[1], _goals[2], 1.0f);
+            goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
 
-            _colorFade = 1;
-            _overrideColor = true;
-            _targetColor = Color.green;
+            colorFade = 1;
+            overrideColor = true;
+            targetColor = Color.green;
         }
         else
         {
-            _colorFade = 1;
-            _overrideColor = true;
-            _targetColor = Color.red;
+            colorFade = 1;
+            overrideColor = true;
+            targetColor = Color.red;
         }
     }
 
     void Update()
     {
-        _buttonColor = new Color(_redLever._checkValue, _greenLever._checkValue, _blueLever._checkValue, 1.0f).linear;
+        buttonColor = new Color(redLever.checkValue, greenLever.checkValue, blueLever.checkValue, 1.0f).linear;
 
-        _colorFade -= _fadeSpeed;
-        _colorFade = Mathf.Clamp(_colorFade, 0.0f, 1.0f);
+        colorFade -= fadeSpeed;
+        colorFade = Mathf.Clamp(colorFade, 0.0f, 1.0f);
 
-        if (_colorFade == 0)
+        if (colorFade == 0)
         {
-            _overrideColor = false;
+            overrideColor = false;
         }
-        _material.color = Color.Lerp(_buttonColor, _targetColor, _colorFade);
+        material.color = Color.Lerp(buttonColor, targetColor, colorFade);
         
-        if (!_overrideColor)
+        if (!overrideColor)
         {
-            _material.SetColor("_BaseColor", _buttonColor);
+            material.SetColor("BaseColor", buttonColor);
         }
     }
 
     bool FullCheck()
     {
-        for (int i = 0; i < _checks.Count; i++)
+        for (int i = 0; i < checks.Count; i++)
         {
-            if (!(_checks[i]._checkValue - _lenience < _goals[i] && _goals[i] < _checks[i]._checkValue + _lenience))
+            if (!(checks[i].checkValue - lenience < goals[i] && goals[i] < checks[i].checkValue + lenience))
             {
                 return false;
             }

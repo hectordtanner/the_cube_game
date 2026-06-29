@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 public class CheckController : MonoBehaviour
 {
     [SerializeField]
-    private float _mouseSensitivity = 5;
+    private float mouseSensitivity = 5;
 
     [SerializeField]
-    private float _positionZ;
+    private float positionZ;
 
-    private float _positionY = 1;
-    private bool _leverHeld = false;
+    private float positionY = 1;
+    private bool leverHeld = false;
 
-    public float _checkValue;
+    public float checkValue;
 
     void Update()
     {
@@ -26,25 +26,25 @@ public class CheckController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
             {
-                _leverHeld = true;
+                leverHeld = true;
             }
         }
 
         if (!(Mouse.current.leftButton.isPressed))
         {
-            _leverHeld = false;
+            leverHeld = false;
         }
 
-        if (_leverHeld)
+        if (leverHeld)
         {
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * _mouseSensitivity;
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity;
             
-                _positionY += mouseDelta.y;
-                _positionY = Mathf.Clamp(_positionY, -1, 1);
+                positionY += mouseDelta.y;
+                positionY = Mathf.Clamp(positionY, -1, 1);
 
-                transform.position = new Vector3(2, _positionY, _positionZ);
+                transform.position = new Vector3(2, positionY, positionZ);
         }
 
-        _checkValue = (transform.position.y + 1) / 2;
+        checkValue = (transform.position.y + 1) / 2;
     }
 }
