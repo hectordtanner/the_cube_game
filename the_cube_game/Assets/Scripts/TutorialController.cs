@@ -1,7 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class TutorialController : MonoBehaviour
@@ -24,25 +25,37 @@ public class TutorialController : MonoBehaviour
 
     private RectTransform rectTransform;
 
+    [SerializeField]
+    private Vector2 endPos;
+
+    [SerializeField]
+    private Vector2 startPos;
+
+    private int tutorialStage = 0;
+
     void Start()
     {
+        index = 0;
         dialogue.text = string.Empty;
-        StartDialogue();
+        StartCoroutine(TypeLine());
         rectTransform = GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = startPos;
     }
 
     void Update()
     {
-        if (Mouse.current.rightButton.isPressed && Mouse.current.delta.ReadValue().magnitude != 0.0f && dialogue.text == lines[index])
+        switch (tutorialStage)
         {
-            NextTutorial(new Vector2(100, 100));
+            case 0:
+                if (Mouse.current.rightButton.isPressed && Mouse.current.delta.ReadValue().magnitude != 0.0f && dialogue.text == lines[index])
+                {
+                    StartCoroutine(MoveBox(endPos, CloseTutorial));
+                }
+                break;
+
+            case 1:
+                break;
         }
-    }
-    
-    void StartDialogue()
-    {
-        index = 0;
-        StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
@@ -54,19 +67,27 @@ public class TutorialController : MonoBehaviour
         }
     }
 
-    void NextTutorial(Vector2 endPos)
+    void CloseTutorial()
     {   
-        MoveBox(endPos);
         gameObject.SetActive(false);
-        index++;
         dialogue.text = string.Empty;
     }
 
-    void MoveBox(Vector2 endPos)
+    void OpenNextTutorial()
     {
-        while (rectTransform.anchoredPosition != endPos)
+        gameObject.SetActive(true);
+        index++;
+        MoveBox(startPos, null);
+    }
+
+    IEnumerator MoveBox(Vector2 target, Action onComplete)
+    {
+        while (Vector2.Distance(rectTransform.anchoredPosition, target) >= 0.1f)
         {
-            rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, endPos, ref velocity, smoothTime);
+            rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, target, ref velocity, smoothTime);
+            yield return null;
         }
+
+        onComplete?.Invoke();
     }
 }
