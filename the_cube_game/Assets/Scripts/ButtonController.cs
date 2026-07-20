@@ -60,7 +60,7 @@ public class ButtonController : MonoBehaviour
     {
         if (FullCheck())
         {
-            score += 1;
+            score ++;
             scoreText.text = "Score: " + score;
             
             for (int i = 0; i < goals.Count; i++)

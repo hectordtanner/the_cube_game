@@ -33,11 +33,30 @@ public class TutorialController : MonoBehaviour
 
     private int tutorialStage = 0;
 
+    private bool isChangingTutorial = false;
+
+    private bool isTyping = false;
+
+    [SerializeField]
+    private CheckController blueLever;
+
+    [SerializeField]
+    private CheckController redLever;
+
+    [SerializeField]
+    private CheckController greenLever;
+
+    [SerializeField]
+    private ButtonController button;
+
     void Start()
     {
         index = 0;
         dialogue.text = string.Empty;
+
         StartCoroutine(TypeLine());
+        isTyping = false;
+
         rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = startPos;
     }
@@ -49,17 +68,68 @@ public class TutorialController : MonoBehaviour
             case 0:
                 if (Mouse.current.rightButton.isPressed && Mouse.current.delta.ReadValue().magnitude != 0.0f && dialogue.text == lines[index])
                 {
-                    StartCoroutine(MoveBox(endPos, CloseTutorial));
+                    if (!isChangingTutorial)
+                    {
+                        isChangingTutorial = true;
+                        StartCoroutine(MoveBox(endPos, CloseTutorial));
+                    }
                 }
                 break;
 
             case 1:
+                if (!isChangingTutorial)
+                {
+                    isChangingTutorial = true;
+                    OpenNextTutorial();
+                }
+                break;
+
+            case 2:
+                if (!isTyping)
+                {
+                    StartCoroutine(TypeLine());
+                }
+
+                if ((blueLever.checkValue != 1 | redLever.checkValue != 1 | greenLever.checkValue != 1) && dialogue.text == lines[index])
+                {
+                    if (!isChangingTutorial)
+                    {
+                        isChangingTutorial = true;
+                        StartCoroutine(MoveBox(endPos, CloseTutorial));
+                    }
+                }
+                break;
+
+            case 3:
+                if (!isChangingTutorial)
+                {
+                    isChangingTutorial = true;
+                    OpenNextTutorial();
+                }
+                isTyping = false;
+                break;
+
+            case 4:
+                if (!isTyping)
+                {
+                    StartCoroutine(TypeLine());
+                }
+
+                if ((button.score > 0) && dialogue.text == lines[index])
+                {
+                    if (!isChangingTutorial)
+                    {
+                        isChangingTutorial = true;
+                        StartCoroutine(MoveBox(endPos, CloseTutorial));
+                    }
+                }
                 break;
         }
     }
 
     IEnumerator TypeLine()
     {
+        isTyping = true;
         foreach (char c in lines[index])
         {
             dialogue.text += c;
@@ -69,15 +139,16 @@ public class TutorialController : MonoBehaviour
 
     void CloseTutorial()
     {   
-        gameObject.SetActive(false);
         dialogue.text = string.Empty;
+        tutorialStage ++;
+        isChangingTutorial = false;
     }
 
     void OpenNextTutorial()
     {
-        gameObject.SetActive(true);
+        tutorialStage ++;
         index++;
-        MoveBox(startPos, null);
+        StartCoroutine(MoveBox(startPos, () => {isChangingTutorial = false;}));
     }
 
     IEnumerator MoveBox(Vector2 target, Action onComplete)

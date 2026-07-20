@@ -838,10 +838,15 @@ MonoBehaviour:
   lines:
   - Drag right mouse to rotate the camera
   - Drag left mouse to move the levers
+  - Click the button when the colour matches
   scrollSpeed: 0.05
   smoothTime: 0.5
   endPos: {x: 1000, y: -280}
   startPos: {x: 640, y: -280}
+  blueLever: {fileID: 239665421}
+  redLever: {fileID: 2007764498}
+  greenLever: {fileID: 1609737369}
+  button: {fileID: 1933956315}
 --- !u!1 &755006867
 GameObject:
   m_ObjectHideFlags: 0
