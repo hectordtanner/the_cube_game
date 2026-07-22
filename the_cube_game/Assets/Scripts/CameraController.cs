@@ -16,10 +16,10 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float smoothTime = 0.1f;
 
-    private float rotationX;
-    private float rotationY;
+    private float rotationX = 25;
+    private float rotationY = -40;
 
-    private Vector3 localEulerAngles = new Vector3(0, 0, 0);
+    private Vector3 localEulerAngles = new Vector3(25, -40, 0);
     private Vector3 velocity = Vector3.zero;
 
     void Update()

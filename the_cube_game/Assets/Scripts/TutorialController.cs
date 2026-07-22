@@ -54,6 +54,11 @@ public class TutorialController : MonoBehaviour
         index = 0;
         dialogue.text = string.Empty;
 
+        blueLever.gameObject.SetActive(false);
+        redLever.gameObject.SetActive(false);
+        greenLever.gameObject.SetActive(false);
+        button.gameObject.SetActive(false);
+
         StartCoroutine(TypeLine());
         isTyping = false;
 
@@ -85,6 +90,11 @@ public class TutorialController : MonoBehaviour
                 break;
 
             case 2:
+
+                blueLever.gameObject.SetActive(true);
+                redLever.gameObject.SetActive(true);
+                greenLever.gameObject.SetActive(true);
+
                 if (!isTyping)
                 {
                     StartCoroutine(TypeLine());
@@ -110,6 +120,9 @@ public class TutorialController : MonoBehaviour
                 break;
 
             case 4:
+
+                button.gameObject.SetActive(true);
+
                 if (!isTyping)
                 {
                     StartCoroutine(TypeLine());
