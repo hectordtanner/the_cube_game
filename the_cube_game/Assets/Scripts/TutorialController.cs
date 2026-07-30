@@ -47,6 +47,9 @@ public class TutorialController : MonoBehaviour
     private CheckController greenLever;
 
     [SerializeField]
+    private GameObject leverIndicator;
+
+    [SerializeField]
     private ButtonController button;
 
     void Start()
@@ -57,6 +60,7 @@ public class TutorialController : MonoBehaviour
         blueLever.gameObject.SetActive(false);
         redLever.gameObject.SetActive(false);
         greenLever.gameObject.SetActive(false);
+        leverIndicator.SetActive(false);
         button.gameObject.SetActive(false);
 
         StartCoroutine(TypeLine());
@@ -94,14 +98,16 @@ public class TutorialController : MonoBehaviour
                 blueLever.gameObject.SetActive(true);
                 redLever.gameObject.SetActive(true);
                 greenLever.gameObject.SetActive(true);
+                leverIndicator.SetActive(true);
 
                 if (!isTyping)
                 {
                     StartCoroutine(TypeLine());
                 }
-
-                if ((blueLever.checkValue != 1 | redLever.checkValue != 1 | greenLever.checkValue != 1) && dialogue.text == lines[index])
+                
+                if ((blueLever.checkValue != 1.0f | redLever.checkValue != 0.5f | greenLever.checkValue != 0.8f) && dialogue.text == lines[index])
                 {
+                    
                     if (!isChangingTutorial)
                     {
                         isChangingTutorial = true;
@@ -160,7 +166,7 @@ public class TutorialController : MonoBehaviour
     void OpenNextTutorial()
     {
         tutorialStage ++;
-        index++;
+        index ++;
         StartCoroutine(MoveBox(startPos, () => {isChangingTutorial = false;}));
     }
 

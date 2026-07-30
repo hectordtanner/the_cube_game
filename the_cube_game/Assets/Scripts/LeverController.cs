@@ -10,10 +10,19 @@ public class CheckController : MonoBehaviour
     [SerializeField]
     private float positionZ;
 
-    private float positionY = 1;
+    [SerializeField]
+    private float startY;
+
+    private float positionY;
     private bool leverHeld = false;
 
     public float checkValue;
+
+    void Awake()
+    {
+        positionY = startY;
+        checkValue = (positionY + 1) / 2;
+    }
 
     void Update()
     {
@@ -45,6 +54,6 @@ public class CheckController : MonoBehaviour
                 transform.position = new Vector3(2, positionY, positionZ);
         }
 
-        checkValue = (transform.position.y + 1) / 2;
+        checkValue = (positionY + 1) / 2;
     }
 }

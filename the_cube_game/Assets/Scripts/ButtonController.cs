@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ButtonController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class ButtonController : MonoBehaviour
     private Color buttonColor = Color.white;
 
     private List<float> goals = new List<float>();
-    private List<CheckController> checks = new List<CheckController>();
+    private List<CheckController> leverChecks = new List<CheckController>();
 
     public int score = 0;
 
@@ -50,10 +51,10 @@ public class ButtonController : MonoBehaviour
         goals.Add(Random.Range(0.0f, 1.0f));
         
         goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
-
-        checks.Add(redLever);
-        checks.Add(greenLever);
-        checks.Add(blueLever);
+        
+        leverChecks.Add(redLever);
+        leverChecks.Add(greenLever);
+        leverChecks.Add(blueLever);
     }
 
     void OnMouseDown()
@@ -111,9 +112,12 @@ public class ButtonController : MonoBehaviour
 
     bool FullCheck()
     {
-        for (int i = 0; i < checks.Count; i++)
+
+        for (int i = 0; i < leverChecks.Count; i++)
         {
-            if (!(checks[i].checkValue - lenience < goals[i] && goals[i] < checks[i].checkValue + lenience))
+            lenience = 0.05f * (2 * (goals.Where((x, idx) => x > goals[i] || (x == goals[i] && idx < i)).Count()) + 1);
+            //print((goals[i] - lenience) + " to " + (goals[i] + lenience) + ", len: " + lenience + ", goal: " + goals[i] + ", current: " + leverChecks[i].checkValue + ", pos: " + i);
+            if (!(goals[i] - lenience <= leverChecks[i].checkValue && leverChecks[i].checkValue <= goals[i] + lenience))
             {
                 return false;
             }
