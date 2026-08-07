@@ -42,6 +42,18 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI scoreText;
 
+    private int wrongCount = 0;
+
+    [SerializeField]
+    private int hintThreshold;
+
+    private string[] colours = new string[] {"red", "green", "blue"};
+
+    private int lowestWrong;
+
+    [SerializeField]
+    private GameObject ghostLever;
+
     void Start()
     {
         material = GetComponent<MeshRenderer>().material;
@@ -55,6 +67,8 @@ public class ButtonController : MonoBehaviour
         leverChecks.Add(redLever);
         leverChecks.Add(greenLever);
         leverChecks.Add(blueLever);
+
+        ghostLever.SetActive(false);
     }
 
     void OnMouseDown()
@@ -82,12 +96,23 @@ public class ButtonController : MonoBehaviour
             colorFade = 1;
             overrideColor = true;
             targetColor = Color.green;
+            wrongCount = 0;
+            ghostLever.SetActive(false);
         }
         else
         {
             colorFade = 1;
             overrideColor = true;
             targetColor = Color.red;
+            wrongCount += 1;
+            
+            if (wrongCount > hintThreshold)
+            {
+                lowestWrong = FindLowestWrong();
+                ghostLever.transform.position = new Vector3(2.0f, (goals[lowestWrong] * 2 - 1), leverChecks[lowestWrong].positionZ);
+                ghostLever.SetActive(true);
+                wrongCount = 0;
+            }
         }
     }
 
@@ -116,12 +141,31 @@ public class ButtonController : MonoBehaviour
         for (int i = 0; i < leverChecks.Count; i++)
         {
             lenience = 0.05f * (2 * (goals.Where((x, idx) => x > goals[i] || (x == goals[i] && idx < i)).Count()) + 1);
-            //print((goals[i] - lenience) + " to " + (goals[i] + lenience) + ", len: " + lenience + ", goal: " + goals[i] + ", current: " + leverChecks[i].checkValue + ", pos: " + i);
             if (!(goals[i] - lenience <= leverChecks[i].checkValue && leverChecks[i].checkValue <= goals[i] + lenience))
             {
                 return false;
             }
         }
         return true;
+    }
+
+    int FindLowestWrong()
+    {
+        int lowestIndex = -1;
+        float lowestValue = float.MaxValue;
+
+        for (int i = 0; i < goals.Count; i++)
+        {
+            lenience = 0.05f * (2 * (goals.Where((x, idx) => x > goals[i] || (x == goals[i] && idx < i)).Count()) + 1);
+            if (!(goals[i] - lenience <= leverChecks[i].checkValue && leverChecks[i].checkValue <= goals[i] + lenience))
+            {
+                if (goals[i] < lowestValue)
+                {
+                    lowestValue = goals[i];
+                    lowestIndex = i;
+                }
+            }
+        }
+        return lowestIndex;
     }
 }

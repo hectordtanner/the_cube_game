@@ -16,8 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float smoothTime = 0.1f;
 
-    private float rotationX = 25;
-    private float rotationY = -40;
+    public float rotationX = 25;
+    public float rotationY = -40;
 
     private Vector3 localEulerAngles = new Vector3(25, -40, 0);
     private Vector3 velocity = Vector3.zero;

@@ -52,6 +52,9 @@ public class TutorialController : MonoBehaviour
     [SerializeField]
     private ButtonController button;
 
+    [SerializeField]
+    private CameraController gameCamera;
+
     void Start()
     {
         index = 0;
@@ -90,6 +93,8 @@ public class TutorialController : MonoBehaviour
                 {
                     isChangingTutorial = true;
                     OpenNextTutorial();
+                    gameCamera.rotationX = 25;
+                    gameCamera.rotationY = -90;
                 }
                 break;
 
@@ -128,6 +133,7 @@ public class TutorialController : MonoBehaviour
             case 4:
 
                 button.gameObject.SetActive(true);
+                gameCamera.transform.position = new Vector3(0.0f, 2.0f, 5.0f);
 
                 if (!isTyping)
                 {

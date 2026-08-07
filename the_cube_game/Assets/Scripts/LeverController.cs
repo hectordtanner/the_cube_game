@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class CheckController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CheckController : MonoBehaviour
     private float mouseSensitivity = 5;
 
     [SerializeField]
-    private float positionZ;
+    public float positionZ;
 
     [SerializeField]
     private float startY;
@@ -17,6 +18,9 @@ public class CheckController : MonoBehaviour
     private bool leverHeld = false;
 
     public float checkValue;
+
+    [SerializeField]
+    private List<CheckController> otherLevers = new List<CheckController>();
 
     void Awake()
     {
@@ -35,7 +39,8 @@ public class CheckController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
             {
-                leverHeld = true;
+                if (otherLevers.All(otherLever => !otherLever.leverHeld))
+                    leverHeld = true;
             }
         }
 
