@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class ButtonController : MonoBehaviour
 {
@@ -54,13 +55,16 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private GameObject ghostLever;
 
+    [SerializeField]
+    private ScoreTimer scoreTimer;
+
     void Start()
     {
         material = GetComponent<MeshRenderer>().material;
 
-        goals.Add(Random.Range(0.0f, 1.0f));
-        goals.Add(Random.Range(0.0f, 1.0f));
-        goals.Add(Random.Range(0.0f, 1.0f));
+        goals.Add(UnityEngine.Random.Range(0.0f, 1.0f));
+        goals.Add(UnityEngine.Random.Range(0.0f, 1.0f));
+        goals.Add(UnityEngine.Random.Range(0.0f, 1.0f));
         
         goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
         
@@ -69,6 +73,7 @@ public class ButtonController : MonoBehaviour
         leverChecks.Add(blueLever);
 
         ghostLever.SetActive(false);
+        scoreTimer.gameObject.SetActive(true);
     }
 
     void OnMouseDown()
@@ -80,13 +85,13 @@ public class ButtonController : MonoBehaviour
             
             for (int i = 0; i < goals.Count; i++)
             {
-                if (Random.value < goals[i])
+                if (UnityEngine.Random.value < goals[i])
                 {
-                    goals[i] = Random.Range(0.0f, goals[i] - newGoalDifference);
+                    goals[i] = UnityEngine.Random.Range(0.0f, goals[i] - newGoalDifference);
                 }
                 else
                 {
-                    goals[i] = Random.Range(goals[i] + newGoalDifference, 1.0f);
+                    goals[i] = UnityEngine.Random.Range(goals[i] + newGoalDifference, 1.0f);
                 }
                 goals[i] = Mathf.Clamp(goals[i], 0.0f, 1.0f);
             }
@@ -98,13 +103,15 @@ public class ButtonController : MonoBehaviour
             targetColor = Color.green;
             wrongCount = 0;
             ghostLever.SetActive(false);
+            score ++;
+            scoreTimer.pointTimer += 15f * (float)(Math.Pow(0.98, scoreTimer.pointTimerStart)) + 5;
         }
         else
         {
             colorFade = 1;
             overrideColor = true;
             targetColor = Color.red;
-            wrongCount += 1;
+            wrongCount ++;
             
             if (wrongCount > hintThreshold)
             {

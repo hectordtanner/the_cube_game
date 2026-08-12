@@ -126,6 +126,8 @@ public class TutorialController : MonoBehaviour
                 {
                     isChangingTutorial = true;
                     OpenNextTutorial();
+                    gameCamera.rotationX = 25;
+                    gameCamera.rotationY = 0;
                 }
                 isTyping = false;
                 break;
@@ -133,7 +135,6 @@ public class TutorialController : MonoBehaviour
             case 4:
 
                 button.gameObject.SetActive(true);
-                gameCamera.transform.position = new Vector3(0.0f, 2.0f, 5.0f);
 
                 if (!isTyping)
                 {
