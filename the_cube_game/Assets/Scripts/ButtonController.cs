@@ -73,7 +73,11 @@ public class ButtonController : MonoBehaviour
         leverChecks.Add(blueLever);
 
         ghostLever.SetActive(false);
-        scoreTimer.gameObject.SetActive(true);
+        
+        if (GameSettings.isTimerOn)
+        {
+            scoreTimer.gameObject.SetActive(true);
+        }
     }
 
     void OnMouseDown()
