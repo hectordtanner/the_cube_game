@@ -31,8 +31,6 @@ public class TutorialController : MonoBehaviour
     [SerializeField]
     private Vector2 startPos;
 
-    private int tutorialStage = 0;
-
     private bool isChangingTutorial = false;
 
     private bool isTyping = false;
@@ -54,6 +52,8 @@ public class TutorialController : MonoBehaviour
 
     [SerializeField]
     private CameraController gameCamera;
+
+    private int tutorialStage = 0;
 
     void Start()
     {

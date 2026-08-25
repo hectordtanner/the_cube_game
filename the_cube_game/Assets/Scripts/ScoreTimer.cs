@@ -4,21 +4,30 @@ using TMPro;
 public class ScoreTimer : MonoBehaviour
 {
     
-    public float pointTimer;
+    public float timer = 1.0f;
 
-    public float pointTimerStart;
+    public float timerStart;
 
     private TextMeshProUGUI timerText;
+
+    [SerializeField]
+    private GameObject container;
 
     void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
-        pointTimer = 2 * pointTimerStart;
+        timer = 2 * timerStart;
     }
 
     void Update()
     {
-        pointTimer -= Time.deltaTime;
-        timerText.text = ("Time: " + pointTimer.ToString("F2") + "s");
+        timer -= Time.deltaTime;
+        timerText.text = ("Time: " + timer.ToString("F2") + "s");
+        if (timer <= 0)
+        {
+            container.SetActive(true);
+            Time.timeScale = 0;
+            gameObject.SetActive(false);
+        }
     }
 }

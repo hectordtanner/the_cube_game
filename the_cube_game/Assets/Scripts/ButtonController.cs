@@ -113,7 +113,7 @@ public class ButtonController : MonoBehaviour
                 wrongCount = 0;
                 ghostLever.SetActive(false);
                 score ++;
-                scoreTimer.pointTimer += 15f * (float)(Math.Pow(0.98, scoreTimer.pointTimerStart)) + 5;
+                scoreTimer.timer += 15f * (float)(Math.Pow(0.98, scoreTimer.timerStart)) + 5;
             }
             else
             {
