@@ -20,6 +20,9 @@ public class CheckController : MonoBehaviour
     public float checkValue;
 
     [SerializeField]
+    private PauseMenuController menuData;
+
+    [SerializeField]
     private List<CheckController> otherLevers = new List<CheckController>();
 
     void Awake()
@@ -30,7 +33,7 @@ public class CheckController : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.isPressed)
+        if (Mouse.current.leftButton.isPressed && !menuData.isMenuOpen)
         {
             Vector2 mousePosition = Mouse.current.position.ReadValue();
             

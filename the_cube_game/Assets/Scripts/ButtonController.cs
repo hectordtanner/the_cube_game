@@ -58,6 +58,9 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private ScoreTimer scoreTimer;
 
+    [SerializeField]
+    private PauseMenuController menuData;
+
     void Start()
     {
         material = GetComponent<MeshRenderer>().material;
@@ -73,7 +76,7 @@ public class ButtonController : MonoBehaviour
         leverChecks.Add(blueLever);
 
         ghostLever.SetActive(false);
-        
+
         if (GameSettings.isTimerOn)
         {
             scoreTimer.gameObject.SetActive(true);
@@ -82,47 +85,50 @@ public class ButtonController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (FullCheck())
-        {
-            score ++;
-            scoreText.text = "Score: " + score;
-            
-            for (int i = 0; i < goals.Count; i++)
+        if (!menuData.isMenuOpen)
+        {        
+            if (FullCheck() && !menuData.isMenuOpen)
             {
-                if (UnityEngine.Random.value < goals[i])
+                score ++;
+                scoreText.text = "Score: " + score;
+                
+                for (int i = 0; i < goals.Count; i++)
                 {
-                    goals[i] = UnityEngine.Random.Range(0.0f, goals[i] - newGoalDifference);
+                    if (UnityEngine.Random.value < goals[i])
+                    {
+                        goals[i] = UnityEngine.Random.Range(0.0f, goals[i] - newGoalDifference);
+                    }
+                    else
+                    {
+                        goals[i] = UnityEngine.Random.Range(goals[i] + newGoalDifference, 1.0f);
+                    }
+                    goals[i] = Mathf.Clamp(goals[i], 0.0f, 1.0f);
                 }
-                else
-                {
-                    goals[i] = UnityEngine.Random.Range(goals[i] + newGoalDifference, 1.0f);
-                }
-                goals[i] = Mathf.Clamp(goals[i], 0.0f, 1.0f);
-            }
 
-            goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
+                goalDisplay.color = new Color(goals[0], goals[1], goals[2], 1.0f);
 
-            colorFade = 1;
-            overrideColor = true;
-            targetColor = Color.green;
-            wrongCount = 0;
-            ghostLever.SetActive(false);
-            score ++;
-            scoreTimer.pointTimer += 15f * (float)(Math.Pow(0.98, scoreTimer.pointTimerStart)) + 5;
-        }
-        else
-        {
-            colorFade = 1;
-            overrideColor = true;
-            targetColor = Color.red;
-            wrongCount ++;
-            
-            if (wrongCount > hintThreshold)
-            {
-                lowestWrong = FindLowestWrong();
-                ghostLever.transform.position = new Vector3(2.0f, (goals[lowestWrong] * 2 - 1), leverChecks[lowestWrong].positionZ);
-                ghostLever.SetActive(true);
+                colorFade = 1;
+                overrideColor = true;
+                targetColor = Color.green;
                 wrongCount = 0;
+                ghostLever.SetActive(false);
+                score ++;
+                scoreTimer.pointTimer += 15f * (float)(Math.Pow(0.98, scoreTimer.pointTimerStart)) + 5;
+            }
+            else
+            {
+                colorFade = 1;
+                overrideColor = true;
+                targetColor = Color.red;
+                wrongCount ++;
+                
+                if (wrongCount > hintThreshold)
+                {
+                    lowestWrong = FindLowestWrong();
+                    ghostLever.transform.position = new Vector3(2.0f, (goals[lowestWrong] * 2 - 1), leverChecks[lowestWrong].positionZ);
+                    ghostLever.SetActive(true);
+                    wrongCount = 0;
+                }
             }
         }
     }

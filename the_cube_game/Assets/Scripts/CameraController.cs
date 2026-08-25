@@ -22,9 +22,12 @@ public class CameraController : MonoBehaviour
     private Vector3 localEulerAngles = new Vector3(25, -40, 0);
     private Vector3 velocity = Vector3.zero;
 
+    [SerializeField]
+    private PauseMenuController menuData;
+
     void Update()
     {
-        if (Mouse.current.rightButton.isPressed)
+        if (Mouse.current.rightButton.isPressed && !menuData.isMenuOpen)
         {
             Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity;
             

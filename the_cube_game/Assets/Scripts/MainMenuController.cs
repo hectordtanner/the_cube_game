@@ -10,12 +10,14 @@ public class MainMenuController : MonoBehaviour
     {
         GameSettings.isTimerOn = true;
         SceneManager.LoadScene(gameSceneName);
+        Time.timeScale = 1;
     }
 
     public void PlayZen()
     {
         GameSettings.isTimerOn = false;
         SceneManager.LoadScene(gameSceneName);
+        Time.timeScale = 1;
     }
 
     public void Quit()
